@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Syndicates | Presentation</title>
+    <title>Presentation</title>
+
     <style>
         * {
             margin: 0;
@@ -14,31 +15,65 @@
 
         body {
             background: #111;
-            color: white;
-            font-family: Arial, sans-serif;
+            padding: 20px 0;
         }
 
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #1c1c1c;
+        .page {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto 24px;
         }
 
-        iframe {
+        canvas {
             width: 100%;
-            height: calc(100vh - 75px);
-            border: none;
+            height: auto;
+            display: block;
+            background: white;
+            box-shadow: 0 4px 20px #0008;
         }
     </style>
 </head>
 <body>
 
-<header>
-    <h2>SYNDICATES</h2>
-    <p>Hackathon 2026 Presentation</p>
-</header>
+    <main id="presentation"></main>
 
-<iframe src="Syndicates.pdf"></iframe>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+        async function loadPresentation() {
+            const pdf = await pdfjsLib.getDocument("Syndicates.pdf").promise;
+
+            const container = document.getElementById("presentation");
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+
+                const viewport = page.getViewport({ scale: 1.5 });
+
+                const canvas = document.createElement("canvas");
+                const context = canvas.getContext("2d");
+
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+
+                const wrapper = document.createElement("div");
+                wrapper.className = "page";
+                wrapper.appendChild(canvas);
+
+                container.appendChild(wrapper);
+
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport
+                }).promise;
+            }
+        }
+
+        loadPresentation();
+    </script>
 
 </body>
 </html>
