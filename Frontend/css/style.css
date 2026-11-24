@@ -1,0 +1,698 @@
+
+/* ==============================
+   1. GLOBAL SETTINGS
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0B0F0E;
+    color: #E5E7EB;
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* ==============================
+   2. MAIN LAYOUT
+================================ */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   3. SIDEBAR
+================================ */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #101613;
+    border-right: 1px solid #222C26;
+    padding: 30px 20px;
+    flex-shrink: 0;
+}
+
+.logo {
+    margin-bottom: 50px;
+}
+
+.logo h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #E5E7EB;
+}
+
+.logo span {
+    color: #A3E635;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #89948D;
+    padding: 13px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    background: #1B2520;
+    color: #E5E7EB;
+}
+
+.nav-link.active {
+    background: #26351F;
+    color: #A3E635;
+}
+
+
+/* ==============================
+   4. MAIN CONTENT
+================================ */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* ==============================
+   5. TOPBAR
+================================ */
+
+.topbar {
+    height: 80px;
+    padding: 0 35px;
+    background: #101613;
+    border-bottom: 1px solid #222C26;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbar h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: #A3E635;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #A3E635;
+    border-radius: 50%;
+}
+
+
+/* ==============================
+   6. DASHBOARD
+================================ */
+
+.dashboard {
+    padding: 35px;
+}
+
+.welcome h1 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.welcome p {
+    color: #89948D;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   7. STATISTICS CARDS
+================================ */
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.stat-card {
+    background: #141A18;
+    border: 1px solid #222C26;
+    border-radius: 12px;
+    padding: 22px;
+    transition: 0.2s;
+}
+
+.stat-card:hover {
+    border-color: #526B35;
+    transform: translateY(-3px);
+}
+
+.stat-card h3 {
+    color: #89948D;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.stat-card p {
+    font-size: 28px;
+    font-weight: 700;
+    color: #A3E635;
+}
+
+
+/* ==============================
+   8. SECTIONS
+================================ */
+
+.section {
+    margin-top: 40px;
+}
+
+.section h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+
+/* ==============================
+   9. CAMERA FEEDS
+================================ */
+
+.camera-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.camera-card {
+    background: #141A18;
+    border: 1px solid #222C26;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.camera-card h3 {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.camera-screen {
+    height: 220px;
+    background: #080B09;
+    border: 1px solid #26312A;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-screen p {
+    color: #657168;
+    font-size: 13px;
+}
+
+
+/* ==============================
+   10. RECENT EVENTS
+================================ */
+
+.events-container {
+    background: #141A18;
+    border: 1px solid #222C26;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.event {
+    display: grid;
+    grid-template-columns: 1fr 1fr 120px;
+    gap: 15px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #222C26;
+    font-size: 13px;
+}
+
+.event:last-child {
+    border-bottom: none;
+}
+
+.event span:nth-child(2),
+.event span:nth-child(3) {
+    color: #89948D;
+}
+
+
+/* ==============================
+   11. RESPONSIVE DESIGN
+================================ */
+
+@media (max-width: 1000px) {
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 180px;
+        padding: 25px 12px;
+    }
+
+    .dashboard {
+        padding: 20px;
+    }
+
+    .camera-container {
+        grid-template-columns: 1fr;
+    }
+
+    .event {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .sidebar {
+        width: 65px;
+        padding: 20px 8px;
+    }
+
+    .logo h2 {
+        font-size: 0;
+    }
+
+    .logo h2::first-letter {
+        font-size: 21px;
+    }
+
+    .nav-link {
+        font-size: 0;
+        text-align: center;
+        padding: 15px 5px;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .topbar h2 {
+        font-size: 15px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+/* ==============================
+   1. GLOBAL SETTINGS
+================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #0B0F0E;
+    color: #E5E7EB;
+    font-family: 'Inter', sans-serif;
+}
+
+
+/* ==============================
+   2. MAIN LAYOUT
+================================ */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   3. SIDEBAR
+================================ */
+
+.sidebar {
+    width: 250px;
+    min-height: 100vh;
+    background: #101613;
+    border-right: 1px solid #222C26;
+    padding: 30px 20px;
+    flex-shrink: 0;
+}
+
+.logo {
+    margin-bottom: 50px;
+}
+
+.logo h2 {
+    font-size: 21px;
+    font-weight: 700;
+    color: #E5E7EB;
+}
+
+.logo span {
+    color: #A3E635;
+}
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #89948D;
+    padding: 13px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.nav-link:hover {
+    background: #1B2520;
+    color: #E5E7EB;
+}
+
+.nav-link.active {
+    background: #26351F;
+    color: #A3E635;
+}
+
+
+/* ==============================
+   4. MAIN CONTENT
+================================ */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+}
+
+
+/* ==============================
+   5. TOPBAR
+================================ */
+
+.topbar {
+    height: 80px;
+    padding: 0 35px;
+    background: #101613;
+    border-bottom: 1px solid #222C26;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.topbar h2 {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.system-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    color: #A3E635;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: #A3E635;
+    border-radius: 50%;
+}
+
+
+/* ==============================
+   6. DASHBOARD
+================================ */
+
+.dashboard {
+    padding: 35px;
+}
+
+.welcome h1 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.welcome p {
+    color: #89948D;
+    font-size: 14px;
+}
+
+
+/* ==============================
+   7. STATISTICS CARDS
+================================ */
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-top: 30px;
+}
+
+.stat-card {
+    background: #141A18;
+    border: 1px solid #222C26;
+    border-radius: 12px;
+    padding: 22px;
+    transition: 0.2s;
+}
+
+.stat-card:hover {
+    border-color: #526B35;
+    transform: translateY(-3px);
+}
+
+.stat-card h3 {
+    color: #89948D;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.stat-card p {
+    font-size: 28px;
+    font-weight: 700;
+    color: #A3E635;
+}
+
+
+/* ==============================
+   8. SECTIONS
+================================ */
+
+.section {
+    margin-top: 40px;
+}
+
+.section h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+
+/* ==============================
+   9. CAMERA FEEDS
+================================ */
+
+.camera-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.camera-card {
+    background: #141A18;
+    border: 1px solid #222C26;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.camera-card h3 {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.camera-screen {
+    height: 220px;
+    background: #080B09;
+    border: 1px solid #26312A;
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.camera-screen p {
+    color: #657168;
+    font-size: 13px;
+}
+
+
+/* ==============================
+   10. RECENT EVENTS
+================================ */
+
+.events-container {
+    background: #141A18;
+    border: 1px solid #222C26;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.event {
+    display: grid;
+    grid-template-columns: 1fr 1fr 120px;
+    gap: 15px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #222C26;
+    font-size: 13px;
+}
+
+.event:last-child {
+    border-bottom: none;
+}
+
+.event span:nth-child(2),
+.event span:nth-child(3) {
+    color: #89948D;
+}
+
+
+/* ==============================
+   11. RESPONSIVE DESIGN
+================================ */
+
+@media (max-width: 1000px) {
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 180px;
+        padding: 25px 12px;
+    }
+
+    .dashboard {
+        padding: 20px;
+    }
+
+    .camera-container {
+        grid-template-columns: 1fr;
+    }
+
+    .event {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .sidebar {
+        width: 65px;
+        padding: 20px 8px;
+    }
+
+    .logo h2 {
+        font-size: 0;
+    }
+
+    .logo h2::first-letter {
+        font-size: 21px;
+    }
+
+    .nav-link {
+        font-size: 0;
+        text-align: center;
+        padding: 15px 5px;
+    }
+
+    .topbar {
+        padding: 0 15px;
+    }
+
+    .topbar h2 {
+        font-size: 15px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+/* Live Clock */
+
+.clock {
+    color: #89948D;
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+/* Camera Placeholder */
+
+.camera-placeholder {
+    text-align: center;
+}
+
+.camera-placeholder span {
+    color: #A3E635;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.camera-placeholder p {
+    margin-top: 10px;
+    color: #657168;
+    font-size: 12px;
+}
+
