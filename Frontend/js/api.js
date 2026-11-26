@@ -1,4 +1,4 @@
-/* Same-origin FastAPI client. No raw-video URL is exposed to the output player. */
+/* Same-origin FastAPI client. */
 "use strict";
 window.BorderWatchAPI = (() => {
   async function request(path, options = {}, timeout = 30000) {
@@ -21,6 +21,9 @@ window.BorderWatchAPI = (() => {
     health: () => request("/api/health", {}, 8000),
     upload: file => {const body = new FormData(); body.append("file", file); return request("/api/videos", {method:"POST", body}, 120000);},
     start: (videoId, polygon) => request("/api/jobs", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({video_id:videoId, polygon})}),
-    job: id => request(`/api/jobs/${encodeURIComponent(id)}`)
+    job: id => request(`/api/jobs/${encodeURIComponent(id)}`),
+    events: () => request("/api/events"),
+    setReview: (id, review_status) => request(`/api/events/${id}/review`, {method:"PATCH", headers:{"Content-Type":"application/json"}, body:JSON.stringify({review_status})}),
+    clearEvents: () => request("/api/events", {method:"DELETE"})
   };
 })();

@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Runtime data created by the backend (databases, uploads, outputs, clips)
+Backend/storage/
+*.db
+*.sqlite
+*.sqlite3
+
+# Model weights (downloaded automatically on first run)
+*.pt
+*.onnx
+
+# Videos (large, and may contain people or have licensing limits)
+sample_videos/*
+!sample_videos/.gitkeep
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Environment and secrets
+.env
+.env.*
+
+# Editors and OS
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

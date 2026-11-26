@@ -1,182 +1,212 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BorderWatch AI</title><link rel="stylesheet" href="css/style.css"></head>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BorderWatch AI</title>
+<link rel="stylesheet" href="css/style.css?v=5">
+</head>
 <body>
 <div id="scrim" class="scrim" hidden></div>
+
 <aside id="sidebar" class="sidebar" aria-label="Main navigation">
- <a class="brand" href="#dashboard"><span class="brand-mark">BW</span><span>BorderWatch AI<small>CONTROLLED VIDEO ANALYTICS</small></span></a>
- <nav><p class="nav-label">WORKSPACE</p><a href="#dashboard" data-page="dashboard">Dashboard</a><a href="#live-monitoring" data-page="live-monitoring">Live Monitoring</a><a href="#events-alerts" data-page="events-alerts">Events / Alerts</a><a href="#alert-database" data-page="alert-database">Alert Database</a><p class="nav-label">PREFERENCES</p><a href="#settings" data-page="settings">Settings</a></nav>
- <footer><span class="badge" data-backend>Checking backend…</span><p>Uploaded sample footage only.<br>No live CCTV connections.</p></footer>
+  <a class="brand" href="#dashboard"><span class="brand-mark" style="font-size: 28px; line-height: 1;">❄</span><span>BorderWatch AI<small>CONTROLLED VIDEO ANALYTICS</small></span></a>
+  <nav>
+    <p class="nav-label">WORKSPACE</p>
+    <a href="#dashboard" data-page="dashboard">Dashboard</a>
+    <a href="#live-monitoring" data-page="live-monitoring">Live Monitoring</a>
+    <a href="#events-alerts" data-page="events-alerts">Events / Alerts</a>
+    <a href="#alert-database" data-page="alert-database">Alert Database</a>
+    <p class="nav-label">PREFERENCES</p>
+    <a href="#settings" data-page="settings">Settings</a>
+  </nav>
+  <footer><span class="badge" data-backend>Checking backend…</span><p>Uploaded sample footage only.<br>No live CCTV connections.</p></footer>
 </aside>
-<main id="main"><header class="topbar"><button id="menu" class="secondary mobile" aria-label="Open navigation" aria-expanded="false">Menu</button><div><p class="eyebrow">BORDERWATCH WORKSPACE</p><h1 id="pageTitle">Dashboard</h1></div><span class="badge lime">Controlled demo</span></header>
+
+<main id="main">
+<header class="topbar">
+  <button id="menu" class="secondary mobile" aria-label="Open navigation" aria-expanded="false">Menu</button>
+  <div><p class="eyebrow">BORDERWATCH WORKSPACE</p><h1 id="pageTitle">Dashboard</h1></div>
+  <span class="badge lime">Controlled demo</span>
+</header>
+
 <div class="content">
+
+<!-- ============ DASHBOARD ============ -->
 <section id="dashboard" class="page">
- <div class="stats"><article><span>Connected cameras</span><strong>0</strong><small>Sample uploads only</small></article><article><span>Completed this session</span><strong id="completedCount">0</strong><small>Backend-processed samples</small></article><article><span>Stored demo records</span><strong id="recordCount">0</strong><small>Simulated, not detections</small></article><article><span>Backend</span><strong id="backendStat">Checking</strong><small data-backend>Checking backend…</small></article></div>
- <div class="dashboard-grid">
- <article class="card"><div class="card-head"><div><h2>Sample Video Configuration</h2><p>Local preview · controlled MP4 footage</p></div><span class="badge">Original video</span></div>
- <div id="videoStage" class="video-stage"><video id="dashboardVideo" loop muted playsinline preload="metadata"></video><canvas id="polygonCanvas" aria-label="Polygon annotation canvas"></canvas><div id="rawPlaceholder" class="placeholder"><span class="placeholder-icon">↥</span><h3>Upload a controlled sample</h3><p>Your original stays here. Processed footage appears only in Live Monitoring.</p></div></div>
- <div class="playback"><button id="playPause" disabled>Play</button><input id="seek" type="range" min="0" max="1000" value="0" aria-label="Video position" disabled><span id="timeLabel">0:00 / 0:00</span><button id="mute" disabled>Unmute</button></div>
- <div class="toolbar"><label class="button primary" for="videoInput">Upload MP4<input id="videoInput" type="file" accept=".mp4,video/mp4" hidden></label><button id="removeVideo" class="secondary" disabled>Remove video</button><button id="annotate" class="secondary" aria-pressed="true">Annotation: On</button></div>
- <p id="fileName" class="filename">No file selected</p><p class="hint">Video repeats automatically. Use the controls below the preview while marking points.</p></article>
- <article class="card"><div class="card-head"><div><h2>Polygon Boundary</h2><p>Click or tap the video image to add vertices.</p></div><span id="pointCount" class="badge lime">0 points</span></div>
- <div class="toolbar"><button id="savePolygon" class="primary" disabled>Save polygon</button><button id="undoPoint" class="secondary" disabled>Undo point</button><button id="resetPoints" class="secondary">Reset</button></div><div id="coordinates" class="coordinates"></div><p id="polygonStatus" class="hint">No polygon saved for this sample.</p><div class="notice">Coordinates are normalized video-frame positions from 0 to 1, not GPS coordinates. The polygon is a fixed annotation, not object tracking.</div><button id="goProcess" class="primary full">Open Live Monitoring</button></article>
- </div><article class="card"><h2>Controlled demonstration workflow</h2><div class="pipeline"><div><b>01 / Upload</b><p>Choose a short sample MP4.</p></div><div><b>02 / Annotate</b><p>Mark and save an optional polygon.</p></div><div><b>03 / Process</b><p>Submit to your local FastAPI service.</p></div><div><b>04 / Review</b><p>Play the completed processed output.</p></div></div></article>
-</section>
-<section id="live-monitoring" class="page" hidden>
-  <div class="monitor-grid">
-    <!-- Processed video -->
+  <div class="stats">
+    <article><span>Connected cameras</span><strong>0</strong><small>Sample uploads only</small></article>
+    <article><span>Completed this session</span><strong id="completedCount">0</strong><small>Backend-processed samples</small></article>
+    <article><span>Stored events</span><strong id="recordCount">0</strong><small>Saved in SQLite</small></article>
+    <article><span>Backend</span><strong id="backendStat">Checking</strong><small data-backend>Checking backend…</small></article>
+  </div>
+
+  <div class="dashboard-grid">
     <article class="card">
-      <div class="card-head">
-        <div>
-          <h2>AI-Processed Output</h2>
-          <p>
-            Only a completed backend output is loaded into this player.
-          </p>
-        </div>
-
-        <span class="badge lime">Processed only</span>
+      <div class="card-head"><div><h2>Sample Video Configuration</h2><p>Local preview · controlled MP4 footage</p></div><span class="badge">Original video</span></div>
+      <div id="videoStage" class="video-stage">
+        <video id="dashboardVideo" loop muted playsinline preload="metadata"></video>
+        <canvas id="polygonCanvas" aria-label="Polygon annotation canvas"></canvas>
+        <div id="rawPlaceholder" class="placeholder"><span class="placeholder-icon">↥</span><h3>Upload a controlled sample</h3><p>Your original stays here. Processed footage appears only in Live Monitoring.</p></div>
       </div>
-
-      <div class="video-stage">
-        <video
-          id="processedVideo"
-          controls
-          loop
-          muted
-          playsinline
-          hidden
-        ></video>
-
-        <div id="outputPlaceholder" class="placeholder">
-          <span class="placeholder-icon">▷</span>
-          <h3>No processed output</h3>
-
-          <p id="outputMessage">
-            Select a sample on the Dashboard, then start processing.
-          </p>
-        </div>
+      <div class="playback">
+        <button id="playPause" type="button" disabled>Play</button>
+        <input id="seek" type="range" min="0" max="1000" value="0" aria-label="Video position" disabled>
+        <span id="timeLabel">0:00 / 0:00</span>
+        <button id="mute" type="button" disabled>Unmute</button>
       </div>
-
       <div class="toolbar">
-        <button
-          id="processVideo"
-          class="primary"
-          type="button"
-        >
-          Process Dashboard sample
-        </button>
-
-        <button
-          id="checkJob"
-          class="secondary"
-          type="button"
-          hidden
-        >
-          Check job again
-        </button>
+        <label class="button primary" for="videoInput">Upload MP4<input id="videoInput" type="file" accept=".mp4,video/mp4" hidden></label>
+        <button id="removeVideo" class="secondary" type="button" disabled>Remove video</button>
+        <button id="annotate" class="secondary" type="button" aria-pressed="true">Annotation: On</button>
       </div>
-
-      <p class="hint">
-        Processing continues on the backend if you navigate away.
-        This interface does not implement cancellation.
-      </p>
+      <p id="fileName" class="filename">No file selected</p>
+      <p class="hint">Video repeats automatically. Use the controls below the preview while marking points.</p>
     </article>
 
-    <!-- Processing status -->
     <article class="card">
-      <h2>Processing Status</h2>
-
-      <dl class="status-list">
-        <div>
-          <dt>Backend</dt>
-          <dd data-backend>Checking…</dd>
-        </div>
-
-        <div>
-          <dt>Job</dt>
-          <dd id="jobStatus" role="status">Idle</dd>
-        </div>
-
-        <div>
-          <dt>Progress</dt>
-          <dd id="jobProgress">0%</dd>
-        </div>
-
-        <div>
-          <dt>Output</dt>
-          <dd id="outputStatus">Unavailable</dd>
-        </div>
-      </dl>
-
-      <progress id="progress" max="100" value="0">
-        0%
-      </progress>
-
-      <p id="jobId" class="hint wrap">
-        No job submitted.
-      </p>
-
-      <div class="notice">
-        Actual YOLO inference requires the backend.
-        Detection boxes do not establish identity, intent,
-        or a verified security event.
-        The first run may download model weights.
+      <div class="card-head"><div><h2>Polygon Boundary</h2><p>Click or tap the video image to add vertices.</p></div><span id="pointCount" class="badge lime">0 points</span></div>
+      <div class="toolbar">
+        <button id="savePolygon" class="primary" type="button" disabled>Save polygon</button>
+        <button id="undoPoint" class="secondary" type="button" disabled>Undo point</button>
+        <button id="resetPoints" class="secondary" type="button">Reset</button>
       </div>
+      <div id="coordinates" class="coordinates"></div>
+      <p id="polygonStatus" class="hint">No polygon saved for this sample.</p>
+      <div class="notice">Coordinates are normalized video-frame positions from 0 to 1, not GPS coordinates. The polygon is a fixed annotation, not object tracking.</div>
+      <button id="goProcess" class="primary full" type="button">Open Live Monitoring</button>
     </article>
   </div>
-  <!-- End of monitor-grid -->
 
-  <!-- New alert card: below the grid, inside Live Monitoring -->
   <article class="card">
-    <div class="card-head">
-      <div>
-        <h2>Sample Zone Alerts</h2>
-
-        <p>
-          Detection-generated records from this processed sample.
-          Times refer to the video timeline, not the current clock.
-        </p>
-      </div>
-
-      <span class="badge amber">Controlled sample</span>
+    <h2>Controlled demonstration workflow</h2>
+    <div class="pipeline">
+      <div><b>01 / Upload</b><p>Choose a short sample MP4.</p></div>
+      <div><b>02 / Annotate</b><p>Mark and save a polygon.</p></div>
+      <div><b>03 / Process</b><p>Submit to your local FastAPI service.</p></div>
+      <div><b>04 / Review</b><p>Check events and saved clips.</p></div>
     </div>
+  </article>
+</section>
 
-    <p
-      id="zoneAlertSummary"
-      class="hint"
-      role="status"
-    >
-      Process a sample to load its zone alerts.
-    </p>
+<!-- ============ LIVE MONITORING ============ -->
+<section id="live-monitoring" class="page" hidden>
+  <div class="monitor-grid">
+    <article class="card">
+      <div class="card-head"><div><h2>AI-Processed Output</h2><p>Only a completed backend output is loaded into this player.</p></div><span class="badge lime">Processed only</span></div>
+      <div class="video-stage">
+        <video id="processedVideo" controls loop muted playsinline hidden></video>
+        <div id="outputPlaceholder" class="placeholder"><span class="placeholder-icon">▷</span><h3>No processed output</h3><p id="outputMessage">Select a sample on the Dashboard, then start processing.</p></div>
+      </div>
+      <div class="toolbar">
+        <button id="processVideo" class="primary" type="button">Process Dashboard sample</button>
+        <button id="checkJob" class="secondary" type="button" hidden>Check job again</button>
+      </div>
+      <p class="hint">Processing continues on the backend if you navigate away. This interface does not implement cancellation.</p>
+    </article>
 
+    <article class="card">
+      <h2>Processing Status</h2>
+      <dl class="status-list">
+        <div><dt>Backend</dt><dd data-backend>Checking…</dd></div>
+        <div><dt>Job</dt><dd id="jobStatus" role="status">Idle</dd></div>
+        <div><dt>Progress</dt><dd id="jobProgress">0%</dd></div>
+        <div><dt>Output</dt><dd id="outputStatus">Unavailable</dd></div>
+      </dl>
+      <progress id="progress" max="100" value="0">0%</progress>
+      <p id="jobId" class="hint wrap">No job submitted.</p>
+      <div class="notice">YOLO runs on the backend and detects people only. Boxes do not establish identity, intent, or a verified security event. The first run may download model weights.</div>
+    </article>
+  </div>
+
+  <article class="card">
+    <div class="card-head"><div><h2>Sample Zone Alerts</h2><p>Each time a person enters the marked zone. Times are positions in the video, not the clock.</p></div><span class="badge amber">Controlled sample</span></div>
+    <p id="zoneAlertSummary" class="hint" role="status">Process a sample to load its zone alerts.</p>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Alert ID</th>
-            <th>Event</th>
-            <th>Video time</th>
-            <th>People inside</th>
-            <th>Playback</th>
-          </tr>
-        </thead>
-
-        <tbody id="zoneAlertRows">
-          <tr>
-            <td colspan="5">
-              No processed sample loaded.
-            </td>
-          </tr>
-        </tbody>
+        <thead><tr><th>Alert ID</th><th>Event</th><th>Video time</th><th>People inside</th><th>Playback</th></tr></thead>
+        <tbody id="zoneAlertRows"><tr><td colspan="5">No processed sample loaded.</td></tr></tbody>
       </table>
     </div>
   </article>
 </section>
-<section id="events-alerts" class="page" hidden><article class="card"><div class="card-head"><div><h2>Events / Alerts</h2><p>Illustrative records only. Not generated by the detector.</p></div><span class="badge amber">Simulated data</span></div><div class="filters"><input id="eventSearch" type="search" placeholder="Search demonstration events" aria-label="Search events"><select id="eventFilter" aria-label="Filter review status"><option value="">All review statuses</option><option>Pending Review</option><option>Reviewed</option></select></div><div class="table-wrap"><table><thead><tr><th>Event ID</th><th>Event type</th><th>Timestamp</th><th>Processing</th><th>Review</th></tr></thead><tbody id="eventRows"></tbody></table></div></article></section>
-<section id="alert-database" class="page" hidden><article class="card"><div class="card-head"><div><h2>Alert Database</h2><p>Browser-local demonstration records. SQLite is not connected.</p></div><span class="badge amber">localStorage</span></div><div class="filters"><input id="databaseSearch" type="search" placeholder="Search records" aria-label="Search stored records"><select id="databaseFilter" aria-label="Filter event type"><option value="">All event types</option><option>Boundary Crossing</option><option>Motion Detection</option><option>Unattended Object</option></select><button id="exportCsv" class="secondary">Export filtered CSV</button></div><div class="table-wrap"><table><thead><tr><th>Record ID</th><th>Type</th><th>Timestamp</th><th>Source</th><th>Details</th></tr></thead><tbody id="databaseRows"></tbody></table></div></article></section>
-<section id="settings" class="page" hidden><div class="settings-grid"><article class="card"><h2>Application Information</h2><dl class="status-list"><div><dt>Project</dt><dd>SIH26187</dd></div><div><dt>Version</dt><dd>0.3.0 frontend</dd></div><div><dt>Backend</dt><dd data-backend>Checking…</dd></div><div><dt>AI job</dt><dd id="settingsJob">Idle</dd></div><div><dt>Event storage</dt><dd>Browser localStorage</dd></div></dl><button id="refreshBackend" class="secondary">Refresh backend status</button></article><article class="card"><h2>Display & demonstration data</h2><label class="check"><input id="reduceMotion" type="checkbox"> Reduce interface animation</label><p class="hint">Dark theme · saved locally when storage is available.</p><div class="toolbar"><button id="clearRecords" class="danger">Clear demonstration records</button><button id="restoreRecords" class="secondary">Restore sample records</button></div><div class="notice">Clearing demonstration records does not delete uploaded videos, processed files, or jobs on the backend.</div></article></div></section>
-</div></main>
-<dialog id="detailsDialog"><div class="card-head"><h2>Simulated record details</h2><button id="closeDetails" class="secondary">Close</button></div><p id="detailsText"></p></dialog>
+
+<!-- ============ EVENTS / ALERTS ============ -->
+<section id="events-alerts" class="page" hidden>
+  <article class="card">
+    <div class="card-head"><div><h2>Events / Alerts</h2><p>Each time a detected person enters the marked zone in a processed sample.</p></div><span class="badge lime">Backend detections</span></div>
+    <div class="filters">
+      <input id="eventSearch" type="search" placeholder="Search events" aria-label="Search events">
+      <select id="eventFilter" aria-label="Filter review status"><option value="">All review statuses</option><option>Pending Review</option><option>Reviewed</option></select>
+      <button id="reloadEvents" class="secondary" type="button">Reload</button>
+    </div>
+    <p id="eventSummary" class="hint" role="status">Loading events…</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Event ID</th><th>Event type</th><th>Video timestamp</th><th>Recorded at</th><th>Source video</th><th>Review</th></tr></thead>
+        <tbody id="eventRows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>
+
+<!-- ============ ALERT DATABASE ============ -->
+<section id="alert-database" class="page" hidden>
+  <article class="card">
+    <div class="card-head"><div><h2>Alert Database</h2><p>SQLite records with a saved clip from 5 seconds before to 5 seconds after each entry.</p></div><span class="badge lime">SQLite</span></div>
+    <div class="filters">
+      <input id="databaseSearch" type="search" placeholder="Search records" aria-label="Search stored records">
+      <select id="databaseFilter" aria-label="Filter review status"><option value="">All review statuses</option><option>Pending Review</option><option>Reviewed</option></select>
+      <button id="exportCsv" class="secondary" type="button">Export filtered CSV</button>
+    </div>
+    <p id="databaseSummary" class="hint" role="status">Loading records…</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Record ID</th><th>Source video</th><th>Entry (video time)</th><th>Clip window</th><th>Stored at</th><th>Clip</th></tr></thead>
+        <tbody id="databaseRows"></tbody>
+      </table>
+    </div>
+  </article>
+</section>
+
+<!-- ============ SETTINGS ============ -->
+<section id="settings" class="page" hidden>
+  <div class="settings-grid">
+    <article class="card">
+      <h2>Application Information</h2>
+      <dl class="status-list">
+        <div><dt>Project</dt><dd>SIH26187</dd></div>
+        <div><dt>Version</dt><dd>0.4.1</dd></div>
+        <div><dt>Backend</dt><dd data-backend>Checking…</dd></div>
+        <div><dt>AI job</dt><dd id="settingsJob">Idle</dd></div>
+        <div><dt>Event storage</dt><dd>SQLite (Backend/storage/borderwatch.db)</dd></div>
+      </dl>
+      <button id="refreshBackend" class="secondary" type="button">Refresh backend status</button>
+    </article>
+    <article class="card">
+      <h2>Display &amp; stored data</h2>
+      <label class="check"><input id="reduceMotion" type="checkbox"> Reduce interface animation</label>
+      <p class="hint">Dark theme · saved locally when storage is available.</p>
+      <div class="toolbar"><button id="clearRecords" class="danger" type="button">Delete all stored events and clips</button></div>
+      <div class="notice">This permanently deletes stored events and saved clips. Uploaded videos and processed outputs are not deleted.</div>
+    </article>
+  </div>
+</section>
+
+</div>
+</main>
+
+<dialog id="clipDialog" style="max-width:820px">
+  <div class="card-head">
+    <div><h2 id="clipTitle">Event clip</h2><p id="clipMeta"></p></div>
+    <button id="closeClip" class="secondary" type="button">Close</button>
+  </div>
+  <video id="clipPlayer" controls playsinline style="width:100%;border-radius:10px;background:#050807"></video>
+</dialog>
+
 <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
-<script src="js/api.js"></script><script src="js/script.js"></script>
-</body></html>
+
+<script src="js/api.js?v=5"></script>
+<script src="js/script.js?v=5"></script>
+</body>
+</html>
