@@ -33,7 +33,7 @@ BorderWatch AI is a dashboard prototype for analysing recorded video. You upload
 ## Project structure
 
 ```text
-BorderWatch-AI/
+HACKATHON-2026-CLG/
 ├── Backend/
 │   ├── main.py              # FastAPI app, job handling, serves the frontend
 │   ├── requirements.txt
@@ -51,8 +51,7 @@ BorderWatch-AI/
 │   └── js/
 │       ├── api.js           # API calls
 │       └── script.js        # UI logic
-├── sample_videos/
-├── docs/
+├── sample_vids/
 ├── .gitignore
 └── README.md
 ```
@@ -86,7 +85,37 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Windows 10 / 11
+
+1. Install Python from [python.org](https://www.python.org/downloads/). On the first installer screen, tick **Add python.exe to PATH**.
+2. Install FFmpeg in PowerShell, then close and reopen PowerShell:
+
+   ```powershell
+   winget install --id Gyan.FFmpeg -e
+   ffmpeg -version
+   ```
+
+3. Create the environment and install the dependencies:
+
+   ```powershell
+   cd Backend
+   py -m venv .venv
+   .venv\Scripts\Activate.ps1
+   python -m pip install --upgrade pip
+   pip install -r requirements.txt
+   ```
+
+If PowerShell blocks the activation script, run this once in the same window and activate again:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
+
+If `ffmpeg -version` isn't recognised, close and reopen the terminal. If it still fails, add the FFmpeg `bin` folder to your PATH.
+
 ## Run
+
+Linux:
 
 ```bash
 cd Backend
@@ -94,9 +123,15 @@ source .venv/bin/activate
 python -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-Open **http://127.0.0.1:8000** in your browser. Do not open `index.html` directly: the page needs the backend on the same address.
+Windows (PowerShell):
 
-The first processing run downloads the YOLO model weights, so it needs an internet connection.
+```powershell
+cd Backend
+.venv\Scripts\Activate.ps1
+python -m uvicorn main:app --host 127.0.0.1 --port 8000
+```
+
+Open **http://127.0.0.1:8000** in your browser. Do not open `index.html` directly.
 
 ## How to use
 
