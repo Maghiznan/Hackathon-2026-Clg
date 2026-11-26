@@ -191,8 +191,7 @@ Interactive API docs are available at `http://127.0.0.1:8000/docs` while the ser
 ## Team
 
 - Syndicates
-- [K Tamil Maghiznan, Nandika B, Navein A, Nethra B, Nithish Baskar S 
-   Shanmugapriya R, Yogesh A]
+- [K Tamil Maghiznan, Nandika B, Navein A, Nethra B, Nithish Baskar S, Shanmugapriya R, Yogesh A]
 
 ## License
 
