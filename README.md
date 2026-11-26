@@ -190,9 +190,14 @@ Interactive API docs are available at `http://127.0.0.1:8000/docs` while the ser
 
 ## Team
 
-- [Team name]
-- [Member names and roles]
+- Syndicates
+- [K Tamil Maghiznan, Nandika B, Navein A, Nethra B, Nithish Baskar S 
+   Shanmugapriya R, Yogesh A]
 
 ## License
 
-[Choose a license, for example MIT, before making the repository public.]
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**. See the [LICENSE](LICENSE) file.
+
+It uses [Ultralytics YOLO](https://github.com/ultralytics/ultralytics), which is also released under AGPL-3.0. Other dependencies, such as FastAPI, OpenCV, and FFmpeg, have their own licences. Check each project's terms before redistributing or building a commercial product.
+
+Sample videos are not included in this repository. If you add your own, make sure you have the right to use and share them.
